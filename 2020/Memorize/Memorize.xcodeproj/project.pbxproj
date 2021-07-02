@@ -68,11 +68,11 @@
 		C35A961226746A86002EDE6F /* Memorize */ = {
 			isa = PBXGroup;
 			children = (
-				C396B88526888E4E00C24C24 /* Cardify.swift */,
 				C35A961526746A86002EDE6F /* EmojiMemoryGameView.swift */,
-				C35A961326746A86002EDE6F /* MemorizeApp.swift */,
+				C396B88526888E4E00C24C24 /* Cardify.swift */,
 				C396B88126887FFA00C24C24 /* Pie.swift */,
 				C33721E4267E052100774AA1 /* EmojiMemoryGame.swift */,
+				C35A961326746A86002EDE6F /* MemorizeApp.swift */,
 				C33721E2267E020200774AA1 /* MemoryGame.swift */,
 				C3B5873E26875C55007626CA /* Grid.swift */,
 				C3B5874026876855007626CA /* GridLayout.swift */,
