@@ -33,9 +33,9 @@ struct EmojiArtDocumentView: View {
                     )
                         .edgesIgnoringSafeArea([.horizontal, .bottom])
                         .onDrop(of: ["public.image", "public.text"], isTargeted: nil) { providers, location in
-                            print("proivers \(providers)")
-                            var location = CGPoint(x: location.x, y: geometry.convert(location, from: .global).y)
-                            location = CGPoint(x: location.x - geometry.size.width/2, y: location.y - geometry.size.height/2)
+                            print("proivers \(providers), location \(location), geometry \(geometry)")
+                            // var location = CGPoint(x: location.x, y: geometry.convert(location, from: .global).y)
+                            let location = CGPoint(x: location.x - geometry.size.width/2, y: location.y - geometry.size.height/2)
                             return self.drop(providers: providers, at: location)
                         }
                     ForEach(self.document.emojis) { emoji in
