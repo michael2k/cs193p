@@ -8,13 +8,31 @@
 import SwiftUI
 
 struct PaletteChooser: View {
+    @ObservedObject var document: EmojiArtDocument
+    
+    @Binding var chosenPalette: String
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Stepper(
+                onIncrement: {
+                    self.chosenPalette = self.document.palette(after: self.chosenPalette)
+                },
+                onDecrement: {
+                    self.chosenPalette = self.document.palette(before: self.chosenPalette)
+                },
+                label: {
+                    EmptyView()
+                })
+            Text(self.document.paletteNames[self.chosenPalette] ?? "")
+        }
+        .fixedSize(horizontal: /*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/, vertical: false)
+        // .onAppear { self.chosenPalette = self.document.defaultPalette }
     }
 }
 
 struct PaletteChooser_Previews: PreviewProvider {
     static var previews: some View {
-        PaletteChooser()
+        PaletteChooser(document: EmojiArtDocument(), chosenPalette: Binding.constant(""))
     }
 }
