@@ -70,7 +70,7 @@ struct EmojiArtDocumentView: View {
                 }
                 .navigationBarItems(trailing: Button(action: {
                     if let url = UIPasteboard.general.url, url != self.document.backgroundURL {
-                        self.document.backgroundURL = url
+                        self.confirmBackgroundPaste = true
                     } else {
                         self.explainBackgroundPaste = true
                     }
@@ -86,10 +86,21 @@ struct EmojiArtDocumentView: View {
                 }))
             }
         }
+        .alert(isPresented: self.$confirmBackgroundPaste) {
+            return Alert(
+                title: Text("Paste Background"),
+                message: Text("Replace your background with \(UIPasteboard.general.url?.absoluteString ?? "nothing")?."),
+                primaryButton: .default(Text("OK")) {
+                    self.document.backgroundURL = UIPasteboard.general.url
+                },
+                secondaryButton: .cancel()
+            )
+        }
     }
     
     @State private var explainBackgroundPaste = false
-    
+    @State private var confirmBackgroundPaste = false
+
     var isLoading: Bool {
         self.document.backgroundURL != nil && document.backgroundImage == nil
     }
