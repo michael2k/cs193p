@@ -2,7 +2,8 @@
 //  EmojiArtDocument.swift
 //  EmojiArt
 //
-//  Created by Michael M. Kim on 2021/07/03.
+//  Created by CS193p Instructor on 4/27/20.
+//  Copyright © 2020 Stanford University. All rights reserved.
 //
 
 import SwiftUI
@@ -10,7 +11,6 @@ import Combine
 
 class EmojiArtDocument: ObservableObject, Hashable, Identifiable
 {
-
     static func == (lhs: EmojiArtDocument, rhs: EmojiArtDocument) -> Bool {
         lhs.id == rhs.id
     }
@@ -21,25 +21,24 @@ class EmojiArtDocument: ObservableObject, Hashable, Identifiable
         hasher.combine(id)
     }
     
-    static let palette: String = "⭐️🌧🍎🌎🥨⚾️"
+    
+    
+    static let palette: String = "⭐️⛈🍎🌏🥨⚾️"
     
     @Published private var emojiArt: EmojiArt
-    
-    // private static let untitled = "EmojiArtDecument.Untitled"
     
     private var autosaveCancellable: AnyCancellable?
     
     init(id: UUID? = nil) {
         self.id = id ?? UUID()
-        let defaultKey = "EmojiArtDocument.\(self.id.uuidString)"
-        emojiArt = EmojiArt(json: UserDefaults.standard.data(forKey: defaultKey)) ?? EmojiArt()
+        let defaultsKey = "EmojiArtDocument.\(self.id.uuidString)"
+        emojiArt = EmojiArt(json: UserDefaults.standard.data(forKey: defaultsKey)) ?? EmojiArt()
         autosaveCancellable = $emojiArt.sink { emojiArt in
-            // print("\(emojiArt.json?.utf8 ?? "nil")")
-            UserDefaults.standard.set(emojiArt.json, forKey: defaultKey)
+            UserDefaults.standard.set(emojiArt.json, forKey: defaultsKey)
         }
         fetchBackgroundImageData()
     }
-    
+        
     @Published private(set) var backgroundImage: UIImage?
     
     @Published var steadyStateZoomScale: CGFloat = 1.0
@@ -65,7 +64,7 @@ class EmojiArtDocument: ObservableObject, Hashable, Identifiable
             emojiArt.emojis[index].size = Int((CGFloat(emojiArt.emojis[index].size) * scale).rounded(.toNearestOrEven))
         }
     }
-    
+
     var backgroundURL: URL? {
         get {
             emojiArt.backgroundURL
@@ -86,11 +85,10 @@ class EmojiArtDocument: ObservableObject, Hashable, Identifiable
                 .map { data, urlResponse in UIImage(data: data) }
                 .receive(on: DispatchQueue.main)
                 .replaceError(with: nil)
-                .assign(to: \EmojiArtDocument.backgroundImage, on: self)
+                .assign(to: \.backgroundImage, on: self)
         }
     }
 }
-
 
 extension EmojiArt.Emoji {
     var fontSize: CGFloat { CGFloat(self.size) }

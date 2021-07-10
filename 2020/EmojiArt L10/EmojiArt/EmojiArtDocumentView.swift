@@ -2,7 +2,8 @@
 //  EmojiArtDocumentView.swift
 //  EmojiArt
 //
-//  Created by Michael M. Kim on 2021/07/03.
+//  Created by CS193p Instructor on 4/27/20.
+//  Copyright © 2020 Stanford University. All rights reserved.
 //
 
 import SwiftUI
@@ -14,7 +15,6 @@ struct EmojiArtDocumentView: View {
     
     init(document: EmojiArtDocument) {
         self.document = document
-        // self.chosenPalette = self.document.defaultPalette
         _chosenPalette = State(wrappedValue: self.document.defaultPalette)
     }
     
@@ -31,9 +31,7 @@ struct EmojiArtDocumentView: View {
                         }
                     }
                 }
-                // .onAppear { self.chosenPalette = self.document.defaultPalette }
             }
-            // .padding(.horizontal)
             GeometryReader { geometry in
                 ZStack {
                     Color.white.overlay(
@@ -41,13 +39,12 @@ struct EmojiArtDocumentView: View {
                             .scaleEffect(self.zoomScale)
                             .offset(self.panOffset)
                     )
-                    .gesture(self.doubleTabToZoom(in: geometry.size))
+                        .gesture(self.doubleTapToZoom(in: geometry.size))
                     if self.isLoading {
                         Image(systemName: "hourglass").imageScale(.large).spinning()
                     } else {
                         ForEach(self.document.emojis) { emoji in
                             Text(emoji.text)
-    //                            .font(self.font(for: emoji))
                                 .font(animatableWithSize: emoji.fontSize * self.zoomScale)
                                 .position(self.position(for: emoji, in: geometry.size))
                         }
@@ -60,17 +57,16 @@ struct EmojiArtDocumentView: View {
                 .onReceive(self.document.$backgroundImage) { image in
                     self.zoomToFit(image, in: geometry.size)
                 }
-                .onDrop(of: ["public.image", "public.text"], isTargeted: nil) { providers, location in
-                    print("proivers \(providers), location \(location), geometry \(geometry)")
-                    // var location = geometry.convert(location, from: .global)
-                    var location = CGPoint(x: location.x - geometry.size.width/2, y: location.y - geometry.size.height/2)
+                .onDrop(of: ["public.image","public.text"], isTargeted: nil) { providers, location in
+                    var location = geometry.convert(location, from: .global)
+                    location = CGPoint(x: location.x - geometry.size.width/2, y: location.y - geometry.size.height/2)
                     location = CGPoint(x: location.x - self.panOffset.width, y: location.y - self.panOffset.height)
                     location = CGPoint(x: location.x / self.zoomScale, y: location.y / self.zoomScale)
                     return self.drop(providers: providers, at: location)
                 }
                 .navigationBarItems(trailing: Button(action: {
                     if let url = UIPasteboard.general.url, url != self.document.backgroundURL {
-                        self.document.backgroundURL = url
+                        self.confirmBackgroundPaste = true
                     } else {
                         self.explainBackgroundPaste = true
                     }
@@ -79,25 +75,37 @@ struct EmojiArtDocumentView: View {
                         .alert(isPresented: self.$explainBackgroundPaste) {
                             return Alert(
                                 title: Text("Paste Background"),
-                                message: Text("Copy the URL of an image to the clip board and touch this button to make it the background of your document"),
+                                message: Text("Copy the URL of an image to the clip board and touch this button to make it the background of your document."),
                                 dismissButton: .default(Text("OK"))
                             )
                         }
                 }))
             }
+            .zIndex(-1)
+        }
+        .alert(isPresented: self.$confirmBackgroundPaste) {
+            Alert(
+                title: Text("Paste Background"),
+                message: Text("Replace your background with \(UIPasteboard.general.url?.absoluteString ?? "nothing")?."),
+                primaryButton: .default(Text("OK")) {
+                    self.document.backgroundURL = UIPasteboard.general.url
+                },
+                secondaryButton: .cancel()
+            )
         }
     }
     
     @State private var explainBackgroundPaste = false
-    
+    @State private var confirmBackgroundPaste = false
+
     var isLoading: Bool {
-        self.document.backgroundURL != nil && document.backgroundImage == nil
+        document.backgroundURL != nil && document.backgroundImage == nil
     }
     
     @GestureState private var gestureZoomScale: CGFloat = 1.0
     
     private var zoomScale: CGFloat {
-        self.document.steadyStateZoomScale * gestureZoomScale
+        document.steadyStateZoomScale * gestureZoomScale
     }
     
     private func zoomGesture() -> some Gesture {
@@ -113,48 +121,38 @@ struct EmojiArtDocumentView: View {
     @GestureState private var gesturePanOffset: CGSize = .zero
     
     private var panOffset: CGSize {
-        (self.document.steadyStatePanOffset + gesturePanOffset) * zoomScale
+        (document.steadyStatePanOffset + gesturePanOffset) * zoomScale
     }
     
     private func panGesture() -> some Gesture {
         DragGesture()
             .updating($gesturePanOffset) { latestDragGestureValue, gesturePanOffset, transaction in
                 gesturePanOffset = latestDragGestureValue.translation / self.zoomScale
-            }
-            .onEnded { finalDragGestureValue in
-                self.document.steadyStatePanOffset = self.document.steadyStatePanOffset + (finalDragGestureValue.translation / self.zoomScale)
-            }
+        }
+        .onEnded { finalDragGestureValue in
+            self.document.steadyStatePanOffset = self.document.steadyStatePanOffset + (finalDragGestureValue.translation / self.zoomScale)
+        }
     }
+
     
-    private func doubleTabToZoom(in size: CGSize) -> some Gesture {
+    private func doubleTapToZoom(in size: CGSize) -> some Gesture {
         TapGesture(count: 2)
             .onEnded {
                 withAnimation {
-                    self.document.steadyStateZoomScale = 1.0
                     self.zoomToFit(self.document.backgroundImage, in: size)
                 }
             }
     }
     
     private func zoomToFit(_ image: UIImage?, in size: CGSize) {
-        print("size \(size)")
-        if let image = image {
-            print("image size \(image.size), size \(size)")
-        }
-        if let image = image, image.size.width > 0, image.size.height > 0, size.height > 0, size.width > 0, self.document.steadyStateZoomScale == 1.0 {
-            print("steadyStateZoomScale \(self.document.steadyStateZoomScale)")
+        if let image = image, image.size.width > 0, image.size.height > 0, size.height > 0, size.width > 0 {
             let hZoom = size.width / image.size.width
             let vZoom = size.height / image.size.height
             self.document.steadyStatePanOffset = .zero
             self.document.steadyStateZoomScale = min(hZoom, vZoom)
-            print("steadyStateZoomScale \(self.document.steadyStateZoomScale)")
         }
     }
-    
-//    private func font(for emoji: EmojiArt.Emoji) -> Font {
-//        Font.system(size: emoji.fontSize * zoomScale)
-//    }
-    
+        
     private func position(for emoji: EmojiArt.Emoji, in size: CGSize) -> CGPoint {
         var location = emoji.location
         location = CGPoint(x: location.x * zoomScale, y: location.y * zoomScale)
@@ -165,7 +163,6 @@ struct EmojiArtDocumentView: View {
     
     private func drop(providers: [NSItemProvider], at location: CGPoint) -> Bool {
         var found = providers.loadFirstObject(ofType: URL.self) { url in
-            print("dropped \(url)")
             self.document.backgroundURL = url
         }
         if !found {
