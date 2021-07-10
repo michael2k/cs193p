@@ -8,8 +8,18 @@
 import SwiftUI
 
 struct EmojiArtDocumentChooser: View {
+    @EnvironmentObject var store: EmojiArtDocumentStore
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            List {
+                ForEach(store.documents) { document in
+                    NavigationLink(destination: EmojiArtDocumentView(document: document)) {
+                        Text(self.store.name(for: document))
+                    }
+                }
+            }
+        }
     }
 }
 
