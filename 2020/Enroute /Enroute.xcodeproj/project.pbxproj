@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C350AD93269A5C4500FC0D2B /* FilterFlights.swift in Sources */ = {isa = PBXBuildFile; fileRef = C350AD92269A5C4500FC0D2B /* FilterFlights.swift */; };
 		DA3702922679573900527F85 /* EnrouteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3702912679573900527F85 /* EnrouteApp.swift */; };
 		DA3702962679573A00527F85 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA3702952679573A00527F85 /* Assets.xcassets */; };
 		DA3702992679573A00527F85 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA3702982679573A00527F85 /* Preview Assets.xcassets */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C350AD92269A5C4500FC0D2B /* FilterFlights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterFlights.swift; sourceTree = "<group>"; };
 		DA37028E2679573900527F85 /* Enroute.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Enroute.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA3702912679573900527F85 /* EnrouteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrouteApp.swift; sourceTree = "<group>"; };
 		DA3702952679573A00527F85 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				DA3702A42679576000527F85 /* FlightsEnrouteView.swift */,
+				C350AD92269A5C4500FC0D2B /* FilterFlights.swift */,
 				DA3702A62679576000527F85 /* FlightFetcher.swift */,
 				DA3702A12679575F00527F85 /* Airlines.swift */,
 				DA3702A22679575F00527F85 /* Airports.swift */,
@@ -181,6 +184,7 @@
 				DA3702AA2679576000527F85 /* FoundationExtensions.swift in Sources */,
 				DA3702B6267957D400527F85 /* FlightAware+AirlineInfo.swift in Sources */,
 				DA3702A92679576000527F85 /* Airports.swift in Sources */,
+				C350AD93269A5C4500FC0D2B /* FilterFlights.swift in Sources */,
 				DA3702AD2679576000527F85 /* FlightFetcher.swift in Sources */,
 				DA3702B9267957D400527F85 /* FlightSimulationData.swift in Sources */,
 				DA3702B8267957D400527F85 /* FlightAwareRequest.swift in Sources */,
