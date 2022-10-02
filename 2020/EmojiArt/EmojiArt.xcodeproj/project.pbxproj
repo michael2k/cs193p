@@ -78,9 +78,9 @@
 		C350AD17269048BE00FC0D2B /* EmojiArt */ = {
 			isa = PBXGroup;
 			children = (
-				C350AD292690909400FC0D2B /* EmojiArt.swift */,
-				C350AD272690494B00FC0D2B /* EmojiArtDocument.swift */,
 				C350AD8C269980F800FC0D2B /* EmojiArtDocumentStore.swift */,
+				C350AD272690494B00FC0D2B /* EmojiArtDocument.swift */,
+				C350AD292690909400FC0D2B /* EmojiArt.swift */,
 				C350AD8E269986E800FC0D2B /* EmojiArtDocumentChooser.swift */,
 				C350AD76269739C300FC0D2B /* PaletteChooser.swift */,
 				C350AD902699E5B200FC0D2B /* EditableText.swift */,
