@@ -104,9 +104,9 @@
 		DA3702F726795B5A00527F85 /* L12 */ = {
 			isa = PBXGroup;
 			children = (
-				DA3702E526795A6D00527F85 /* Airline.swift */,
-				DA3702E426795A6D00527F85 /* Airport.swift */,
 				DA3702E326795A6D00527F85 /* Flight.swift */,
+				DA3702E426795A6D00527F85 /* Airport.swift */,
+				DA3702E526795A6D00527F85 /* Airline.swift */,
 			);
 			path = L12;
 			sourceTree = "<group>";
