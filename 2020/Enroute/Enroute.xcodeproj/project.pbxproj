@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C32A3F3928E90A630082AC41 /* Enroute.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C32A3F3728E90A630082AC41 /* Enroute.xcdatamodeld */; };
+		C3B9CCAF28EA4A37007A9D8A /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B9CCAE28EA4A37007A9D8A /* MapView.swift */; };
 		DA3702C926795A3B00527F85 /* EnrouteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3702C826795A3B00527F85 /* EnrouteApp.swift */; };
 		DA3702CD26795A3B00527F85 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA3702CC26795A3B00527F85 /* Assets.xcassets */; };
 		DA3702D026795A3B00527F85 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA3702CF26795A3B00527F85 /* Preview Assets.xcassets */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		C32A3F3828E90A630082AC41 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		C3B9CCAE28EA4A37007A9D8A /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		DA3702C526795A3B00527F85 /* Enroute.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Enroute.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA3702C826795A3B00527F85 /* EnrouteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnrouteApp.swift; sourceTree = "<group>"; };
 		DA3702CC26795A3B00527F85 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				DA3702DE26795A6500527F85 /* FilterFlights.swift */,
+				C3B9CCAE28EA4A37007A9D8A /* MapView.swift */,
 				DA3702DF26795A6500527F85 /* FlightsEnrouteView.swift */,
 				C32A3F3728E90A630082AC41 /* Enroute.xcdatamodeld */,
 				DA3702F726795B5A00527F85 /* L12 */,
@@ -194,6 +197,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DA3702E126795A6500527F85 /* FilterFlights.swift in Sources */,
+				C3B9CCAF28EA4A37007A9D8A /* MapView.swift in Sources */,
 				DA3702F226795A7800527F85 /* FlightAware+AirportInfo.swift in Sources */,
 				C32A3F3928E90A630082AC41 /* Enroute.xcdatamodeld in Sources */,
 				DA3702D226795A3B00527F85 /* Persistence.swift in Sources */,
