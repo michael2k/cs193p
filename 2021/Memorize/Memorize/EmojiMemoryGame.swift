@@ -20,12 +20,12 @@ class EmojiMemoryGame {
 
     static func createMemeoryGame() -> MemoryGame<String> {
         MemoryGame<String>(numberOfPairsOfCards: 4) { pairIndex in
-            EmojiMemoryGame.emojis[pairIndex]
+            emojis[pairIndex]
         }
     }
     
     // private var model: MemoryGame<String> = MemoryGame<String>(numberOfPairsOfCards: 4, createCardContent: { pairIndex in "😀" } )
-    private var model: MemoryGame<String> = EmojiMemoryGame.createMemeoryGame()
+    private var model: MemoryGame<String> = createMemeoryGame()
 
     var cards: Array<MemoryGame<String>.Card> {
         return model.cards
