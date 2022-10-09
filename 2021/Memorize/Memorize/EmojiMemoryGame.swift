@@ -13,13 +13,19 @@ import SwiftUI
 //}
 
 class EmojiMemoryGame {
-    var emojis = ["🚗","🚕","🚙","🚌","🚎","🏎",
+    static let emojis = ["🚗","🚕","🚙","🚌","🚎","🏎",
                 "🚓","🚑","🚒","🚐","🛻","🚚",
                 "🚛","🚜","🛵","🏍","🛺","🛞",
                 "🚔","🚍","🚘","🚖","🚡","🚠"]
 
+    static func createMemeoryGame() -> MemoryGame<String> {
+        MemoryGame<String>(numberOfPairsOfCards: 4) { pairIndex in
+            EmojiMemoryGame.emojis[pairIndex]
+        }
+    }
+    
     // private var model: MemoryGame<String> = MemoryGame<String>(numberOfPairsOfCards: 4, createCardContent: { pairIndex in "😀" } )
-    private var model: MemoryGame<String> = MemoryGame<String>(numberOfPairsOfCards: 4) { pairIndex in "😀" }
+    private var model: MemoryGame<String> = EmojiMemoryGame.createMemeoryGame()
 
     var cards: Array<MemoryGame<String>.Card> {
         return model.cards
