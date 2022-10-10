@@ -8,10 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
-    
+
     var body: some View {
-        let game = EmojiMemoryGame()
-        GameView(viewModel: game)
+        NavigationStack {
+            NavigationLink("Next view please", value: "DevTechie.com")
+            .navigationDestination(for: String.self) { val in
+                Text("Here is the second view with value: \(val)")
+                    .font(.title)
+            }
+            .navigationTitle("게임")
+        }
+//        let game = EmojiMemoryGame()
+//        GameView(viewModel: game)
     }
 }
 
