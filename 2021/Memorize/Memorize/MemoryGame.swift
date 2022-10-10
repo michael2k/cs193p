@@ -11,19 +11,24 @@ struct MemoryGame<CardContent> {
     private(set) var cards: Array<Card>
     
     mutating func choose(_ card: Card) {
-        let chosenIndex = index(of: card)
-        cards[chosenIndex].isFaceUp.toggle()
+        // if let chosenIndex = index(of: card) {
+        // if let chosenIndex = cards.firstIndex(where: { aCardINTheCardsArray in aCardINTheCardsArray.id == card.id }){
+        if let chosenIndex = cards.firstIndex(where: { $0.id == card.id }){
+            
+            
+            cards[chosenIndex].isFaceUp.toggle()
+        }
         print("\(cards)")
     }
     
-    func index(of card: Card) -> Int {
-        for index in 0..<cards.count {
-            if cards[index].id == card.id {
-                return index
-            }
-        }
-        return 0 // bogus!!
-    }
+//    func index(of card: Card) -> Int? {
+//        for index in 0..<cards.count {
+//            if cards[index].id == card.id {
+//                return index
+//            }
+//        }
+//        return nil
+//    }
     
     init(numberOfPairsOfCards: Int, createCardContent: (Int) -> CardContent) {
         cards = Array<Card>()
