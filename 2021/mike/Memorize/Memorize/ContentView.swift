@@ -12,9 +12,19 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             NavigationLink("Next view please", value: "DevTechie.com")
-            .navigationDestination(for: String.self) { val in
-                Text("Here is the second view with value: \(val)")
-                    .font(.title)
+                .navigationDestination(for: String.self) { val in
+                    //                Text("Here is the second view with value: \(val)")
+                    //                    .font(.title)
+                    let game = EmojiMemoryGame()
+                    GameView(viewModel: game)
+            }
+            .navigationTitle("게임")
+            NavigationLink("Next view please", value: "DevTechie.com")
+                .navigationDestination(for: String.self) { val in
+                    //                Text("Here is the second view with value: \(val)")
+                    //                    .font(.title)
+                    let game = EmojiMemoryGame()
+                    GameView(viewModel: game)
             }
             .navigationTitle("게임")
         }
@@ -23,45 +33,6 @@ struct ContentView: View {
     }
 }
 
-struct GameView: View {
-    @ObservedObject var viewModel: EmojiMemoryGame
-    
-    var body: some View {
-        ScrollView {
-            LazyVGrid (columns: [GridItem(.adaptive(minimum: 65))] ) {
-                ForEach(viewModel.cards) { card in
-                    CardView(card: card)
-                        .aspectRatio(2/3, contentMode: .fit)
-                        .onTapGesture {
-                            viewModel.choose(card)
-                        }
-                }
-            }
-        }
-        .foregroundColor(.red)
-        .padding(.horizontal)
-    }
-}
-
-
-struct CardView: View {
-    let card: MemoryGame<String>.Card
-    
-    var body: some View {
-        ZStack {
-            let shape = RoundedRectangle(cornerRadius: 20)
-            if card.isFaceUp {
-                shape.fill().foregroundColor(.white)
-                shape.strokeBorder(lineWidth: 3)
-                Text(card.content).font(.largeTitle)
-            } else if card.isMatched {
-                shape.opacity(0)
-            } else {
-                shape.fill()
-            }
-        }
-    }
-}
 
 
 
